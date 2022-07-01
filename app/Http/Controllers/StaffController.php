@@ -15,7 +15,7 @@ class StaffController extends Controller
     public function index()
     {
         return view('/staff.index', [
-            'title' => 'Meeting TimeTable Staff',
+            'title' => 'Meeting Timetable | Staff',
             'staffs' => Staff::all()
         ]); 
     }
@@ -27,7 +27,9 @@ class StaffController extends Controller
      */
     public function create()
     {
-        //
+        return view('/staff.create', [
+            'title' => 'Meeting Timetable | Tambah Staff',
+        ]);
     }
 
     /**
@@ -38,7 +40,14 @@ class StaffController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|max:225',
+            'phone' => 'required|max:13'
+        ]);
+
+        Staff::create($validatedData);
+
+        return redirect('/staff/datastaff');
     }
 
     /**
@@ -49,7 +58,12 @@ class StaffController extends Controller
      */
     public function show($id)
     {
-        //
+        $staff = Staff::find($id);
+
+        return view('/staff.show', [
+            'title' => 'Meeting Table | Staff Detail',
+            'staff' => $staff
+        ]);
     }
 
     /**
@@ -60,7 +74,12 @@ class StaffController extends Controller
      */
     public function edit($id)
     {
-        //
+        $staff = Staff::find($id);
+
+        return view('/staff.edit', [
+            'title' => 'Meeting Timetable | Edit Staff',
+            'staff' => $staff
+        ]);
     }
 
     /**
@@ -70,9 +89,26 @@ class StaffController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $req, $id)
     {
-        //
+        $staff = Staff::find($id);
+
+        $req->validate([
+            'name' => 'required|max:255',
+            'phone' => 'required|max:13'
+        ]);
+
+        if($req->name != $staff->name)
+        $req->validate(['name' => 'required']);
+        if($req->phone != $staff->phone)
+        $req->validate(['phone' => 'required']);
+
+        $staff->update([
+            'name' => $req->name,
+            'phone' => $req->phone
+        ]);
+
+        return redirect('/staff/datastaff');
     }
 
     /**
@@ -83,6 +119,8 @@ class StaffController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Staff::destroy($id);
+
+        return redirect('/staff/datastaff')->with('success', 'Berhasil hapus data!');
     }
 }

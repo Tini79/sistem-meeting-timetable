@@ -21,4 +21,5 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', [DashboardController::class, 'index']);
-Route::resource('/staff', StaffController::class);
+Route::resource('/staff/datastaff', StaffController::class);
+Route::get('/staff/datastaff/create', [StaffController::class, 'create']);
