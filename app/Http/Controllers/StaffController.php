@@ -14,9 +14,12 @@ class StaffController extends Controller
      */
     public function index()
     {
+        $staff = Staff::staff(request(['search']))
+                        ->latest()->paginate(3);
+
         return view('/staff.index', [
             'title' => 'Meeting Timetable | Staff',
-            'staffs' => Staff::all()
+            'staffs' => $staff
         ]); 
     }
 
@@ -41,7 +44,7 @@ class StaffController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => 'required|max:225',
+            'name' => 'required|min:5|max:100',
             'phone' => 'required|max:13'
         ]);
 
@@ -94,7 +97,7 @@ class StaffController extends Controller
         $staff = Staff::find($id);
 
         $req->validate([
-            'name' => 'required|max:255',
+            'name' => 'required|min:5|max:100',
             'phone' => 'required|max:13'
         ]);
 

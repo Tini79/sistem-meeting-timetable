@@ -10,7 +10,7 @@
                 <label for="" class="form-text">Nama</label>
                 <input type="text" name="name" value="{{ old('name', $staff->name) }}">
             </div>
-            <div class="">
+            <div>
                 <label for="" class="form-text">No. Telepon/Hp</label>
                 <input type="text" name="phone" value="{{ old('phone', $staff->phone) }}">
             </div>

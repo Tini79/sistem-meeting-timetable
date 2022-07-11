@@ -1,8 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\KlienController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\StaffController;
+use App\Http\Controllers\AktivitasController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\AssignmentController;
 
 
 /*
@@ -16,10 +20,10 @@ use App\Http\Controllers\StaffController;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
-
-Route::get('/dashboard', [DashboardController::class, 'index']);
+Route::resource('/login', AuthController::class);
+Route::post('/login', [AuthController::class, 'authenticate']);
+Route::resource('/dashboard', DashboardController::class);
 Route::resource('/staff/datastaff', StaffController::class);
-Route::get('/staff/datastaff/create', [StaffController::class, 'create']);
+Route::resource('/klien/dataklien', KlienController::class);
+Route::resource('/aktivitas/dataaktivitas', AktivitasController::class);
+Route::resource('/assignment/dataassignment', AssignmentController::class);
