@@ -12,21 +12,23 @@ class AssignmentController extends Controller
 {
     public function index(Request $request)
     {
-        $assignment = Assignment::latest()
-                        ->when(isset($request->search), function($query) use($request) {
-                            $query->whereHas('staff', function($query2) use($request) {
-                                $query2->where('name', 'like', '%' . $request->search . '%');
-                            })
-                            ->orWhereHas('client', function($query3) use($request) {
-                                $query3->where('company_name', 'like', '%' . $request->search . '%');
-                            })
-                            ->orWhereHas('activity', function($query4) use($request) {
-                                $query4->where('activity', 'like', '%' . $request->search . '%');
-                            });
-                        })
-                        ->orWhere('startDate', 'like', '%' . $request->search . '%')
-                        ->orWhere('endDate', 'like', '%' . $request->search . '%')
-                        ->paginate(3);
+        // $assignment = Assignment::latest()
+        //                 ->when(isset($request->search), function($query) use($request) {
+        //                     $query->whereHas('staff', function($query2) use($request) {
+        //                         $query2->where('name', 'like', '%' . $request->search . '%');
+        //                     })
+        //                     ->orWhereHas('client', function($query3) use($request) {
+        //                         $query3->where('company_name', 'like', '%' . $request->search . '%');
+        //                     })
+        //                     ->orWhereHas('activity', function($query4) use($request) {
+        //                         $query4->where('activity', 'like', '%' . $request->search . '%');
+        //                     });
+        //                 })
+        //                 ->orWhere('startDate', 'like', '%' . $request->search . '%')
+        //                 ->orWhere('endDate', 'like', '%' . $request->search . '%')
+        //                 ->paginate(10);
+
+        $assignment = Assignment::all();
 
         return view('/assignment.index', [
             'title' => 'Meeting Timetable | Assignment',

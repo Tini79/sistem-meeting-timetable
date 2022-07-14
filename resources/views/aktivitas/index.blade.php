@@ -1,29 +1,25 @@
 @extends('layouts.main')
 @section('content')
-<h1>Aktivitas <span>Daftar</span></h1>
-<div class="d-inline-flex">
-    <a href="/aktivitas/dataaktivitas/create">Tambah</a>
+<div class="">
+    <h1>Aktivitas <sup class="text-secondary">Daftar</sup></h1>
 </div>
-<div class="d-inline-flex float-right">
-    <form action="/aktivitas/dataaktivitas">
-        <input type="text" name="search">
-        <button type="submit">Cari</button>
-    </form>
+<div class="row justify-content-end mr-1">
+    <a href="/aktivitas/dataaktivitas/create" class="btn btn-outline-primary">Tambah</a>
 </div>
-<div>
-    <table class="table">
-        <thead>
+<div class="mt-3 bg-white p-5">
+    <table id="example" class="display dataTable table" style="width:100%" aria-describedby="example_info">
+        <thead class="bg-secondary">
             <tr>
-                <th class="col-1">#</th>
-                <th class="col-1">ID</th>
-                <th class="col-4">Aktivitas</th>
-                <th class="col-2">Aksi</th>
+                <th class="col-1 text-white">#</th>
+                <th class="col-1 text-white">ID</th>
+                <th class="col-4 text-white">Aktivitas</th>
+                <th class="col-2 text-white">Aksi</th>
             </tr>
         </thead>
         <tbody>
             @foreach($activities as $activity => $a)
             <tr>
-                <td>{{ $activities->firstItem() + $activity }}.</td>
+                <td>{{ $activity + 1 }}.</td>
                 <td>{{ $a->id }}</td>
                 <td>{{ $a->activity }}</td>
                 <td>
@@ -41,6 +37,5 @@
             @endforeach
         </tbody>
     </table>
-    {{ $activities->links() }}
 </div>
 @endsection

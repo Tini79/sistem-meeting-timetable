@@ -26,9 +26,9 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        Staff::factory(5)->create();
+        Staff::factory(30)->create();
 
-        Client::factory(5)->create();
+        Client::factory(30)->create();
 
         $activities = [
             [
@@ -46,7 +46,7 @@ class DatabaseSeeder extends Seeder
             Activity::create($activity);
         }
 
-        Assignment::factory(5)->create();
+        Assignment::factory(30)->create();
 
         User::create([
             'staff_id' => 1,

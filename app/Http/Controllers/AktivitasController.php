@@ -14,9 +14,11 @@ class AktivitasController extends Controller
      */
     public function index()
     {
+        $activity = Activity::all();
+
         return view('/aktivitas/index', [
             'title' => 'Meeting Timetable | Aktivitas',
-            'activities' => Activity::activity(request(['search']))->latest()->paginate(3)
+            'activities' => $activity
         ]);
     }
 

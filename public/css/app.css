@@ -1683,6 +1683,7 @@
   .form-control-sm {
     height: calc(1.5em + 0.5rem + 2px);
     padding: 0.25rem 0.5rem;
+    border: 1px solid #ced4da;
     font-size: 0.875rem;
     line-height: 1.5;
     border-radius: 0.2rem; }
@@ -5362,7 +5363,7 @@
   a.bg-secondary:hover, a.bg-secondary:focus,
   button.bg-secondary:hover,
   button.bg-secondary:focus {
-    background-color: #545b62 !important; }
+    background-color: #535A60 !important; }
   
   .bg-success {
     background-color: #28a745 !important; }
@@ -6643,7 +6644,7 @@
   
   .mt-5,
   .my-5 {
-    margin-top: 7rem !important; }
+    margin-top: 4.8rem !important; }
   
   .mr-5,
   .mx-5 {
@@ -8268,8 +8269,8 @@
           -o-transition: none;
           transition: none; } }
       #sidebar .custom-menu .btn {
-        width: 40px;
-        height: 40px;
+        /* width: 40px; */
+        height: 45px;
         border-radius: 50%; }
         #sidebar .custom-menu .btn.btn-primary {
           background: #0040ff;
@@ -8320,7 +8321,7 @@
     border-radius: 4px;
     -webkit-box-shadow: none !important;
     box-shadow: none !important;
-    border: transparent; }
+    border: 1px solid #ced4da; }
     .form-control:focus, .form-control:active {
       border-color: #000; }
     .form-control::-webkit-input-placeholder {

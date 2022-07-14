@@ -16,11 +16,11 @@ class Activity extends Model
         return $this->hasMany(Assignment::class);
     }
 
-    public function scopeActivity($query, array $activities)
-    {
-        if(isset($activities['search']) ? $activities['search'] : false) {
-            return $query->where('id', 'like', '%' . $activities['search'] . '%')
-                        ->orWhere('activity', 'like', '%' . $activities['search'] . '%');
-        }
-    }
+    // public function scopeActivity($query, array $activities)
+    // {
+    //     if(isset($activities['search']) ? $activities['search'] : false) {
+    //         return $query->where('id', 'like', '%' . $activities['search'] . '%')
+    //                     ->orWhere('activity', 'like', '%' . $activities['search'] . '%');
+    //     }
+    // }
 }

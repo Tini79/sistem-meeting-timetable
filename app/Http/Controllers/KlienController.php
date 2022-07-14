@@ -9,9 +9,11 @@ class KlienController extends Controller
 {
     public function index() 
     {
+        $client = Client::all();
+        
         return view('/klien.index', [
             'title' => 'Meeting Timetable | Klien',
-            'clients' => Client::client(request(['search']))->latest()->paginate(3)
+            'clients' => $client
         ]);
     }
 

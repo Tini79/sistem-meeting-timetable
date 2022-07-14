@@ -9,33 +9,31 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">	
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/table.css') }}">
-    <link href="{{ asset('css/main.calendar.css') }}" rel='stylesheet' />
-    <title>{{ $title }}</title>
+    <!-- Css of Calendar stuff -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.css" />
+    <!-- Time Range Picker -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <!-- CSS Datatables stuff-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
 
+    <title>{{ $title }}</title>
     <style>
 
-        html, body {
-            overflow: hidden; /* don't do scrollbars */
-            font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-            font-size: 14px;
+        body {
+        padding: 0;
         }
 
-        #calendar-container {
-            position: relative;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+        #loading {
+        display: none;
+        position: absolute;
+        top: 10px;
+        right: 10px;
         }
 
-        .fc-header-toolbar {
-            /*
-            the calendar will be butting up against the edges,
-            but let's scoot in the header's buttons
-            */
-            padding-top: 1em;
-            padding-left: 1em;
-            padding-right: 1em;
+        #calendar {
+        max-width: 1100px;
+        margin: 0 auto;
         }
 
     </style>
@@ -53,95 +51,49 @@
     </section>
 
     <script src="{{ asset('js/jquery.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+    <!-- Time Range Picker Stuff -->
+
+    <!-- Bootstrap's -->
     <script src="{{ asset('js/main.js') }}"></script>
-    <script src="{{ asset('js/calendar.js') }}"></script>
-    <script src="{{ asset('js/custom.js') }}"></script>
-    <script src="{{ asset('js/main.calendar.js') }}"></script>
+
+    <!-- JS Datatable -->
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    
+    <!-- Calendar stuff | ada di index dashboard juga -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+
+    <!-- Also, Time Range Picker -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    
+    <!-- Moment stuff -->
+    <script src="{{ asset('js/moment.js') }}"></script>
 
     <script>
-
-        document.addEventListener('DOMContentLoaded', function() {
-            var calendarEl = document.getElementById('calendar');
-
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-            height: '100%',
-            expandRows: true,
-            slotMinTime: '08:00',
-            slotMaxTime: '20:00',
-            headerToolbar: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-            },
-            initialView: 'dayGridMonth',
-            initialDate: '2020-09-12',
-            navLinks: true, // can click day/week names to navigate views
-            editable: true,
-            selectable: true,
-            nowIndicator: true,
-            dayMaxEvents: true, // allow "more" link when too many events
-            events: [
-                {
-                title: 'All Day Event',
-                start: '2020-09-01',
-                },
-                {
-                title: 'Long Event',
-                start: '2020-09-07',
-                end: '2020-09-10'
-                },
-                {
-                groupId: 999,
-                title: 'Repeating Event',
-                start: '2020-09-09T16:00:00'
-                },
-                {
-                groupId: 999,
-                title: 'Repeating Event',
-                start: '2020-09-16T16:00:00'
-                },
-                {
-                title: 'Conference',
-                start: '2020-09-11',
-                end: '2020-09-13'
-                },
-                {
-                title: 'Meeting',
-                start: '2020-09-12T10:30:00',
-                end: '2020-09-12T12:30:00'
-                },
-                {
-                title: 'Lunch',
-                start: '2020-09-12T12:00:00'
-                },
-                {
-                title: 'Meeting',
-                start: '2020-09-12T14:30:00'
-                },
-                {
-                title: 'Happy Hour',
-                start: '2020-09-12T17:30:00'
-                },
-                {
-                title: 'Dinner',
-                start: '2020-09-12T20:00:00'
-                },
-                {
-                title: 'Birthday Party',
-                start: '2020-09-13T07:00:00'
-                },
-                {
-                title: 'Click for Google',
-                url: 'http://google.com/',
-                start: '2020-09-28'
+        $(function() {
+            $('input[name="dateFilter"]').daterangepicker({
+                opens: 'left',
+                autoUpdateInput: true,
+                locale: {
+                    cancelLabel: 'Clear'
                 }
-            ]
             });
 
-            calendar.render();
-        });
+            $('input[name="dateFilter"]').on('apply.daterangepicker', function(ev, picker) {
+                $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
+            });
 
+            $('input[name="dateFilter"]').on('cancel.daterangepicker', function(ev, picker) {
+                $(this).val('');
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function(){
+            $('#example').DataTable();
+        });
     </script>
 
 </body>

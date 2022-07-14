@@ -14,8 +14,10 @@ class StaffController extends Controller
      */
     public function index()
     {
-        $staff = Staff::staff(request(['search']))
-                        ->latest()->paginate(3);
+        // $staff = Staff::staff(request(['search']))
+        //                 ->latest()->paginate(3);
+
+        $staff = Staff::all();
 
         return view('/staff.index', [
             'title' => 'Meeting Timetable | Staff',

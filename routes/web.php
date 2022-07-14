@@ -20,8 +20,8 @@ use App\Http\Controllers\AssignmentController;
 |
 */
 
-Route::resource('/login', AuthController::class);
-Route::post('/login', [AuthController::class, 'authenticate']);
+Route::resource('/', AuthController::class);
+Route::post('/', [AuthController::class, 'authenticate']);
 Route::resource('/dashboard', DashboardController::class);
 Route::resource('/staff/datastaff', StaffController::class);
 Route::resource('/klien/dataklien', KlienController::class);
