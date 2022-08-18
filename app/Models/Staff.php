@@ -13,17 +13,14 @@ class Staff extends Model
 
     protected $guarded = [''];
 
-    public function Assignments()
+    public function assignments()
     {
         return $this->hasMany(Assignment::class);
     }
 
-    // public function scopeStaff($query, array $staffs)
-    // {
-    //     if(isset($staffs['search']) ? $staffs['search'] : false) {
-    //         return $query->where('id', 'like', '%' . $staffs['search'] . '%')
-    //                     ->orWhere('name', 'like', '%' . $staffs['search'] . '%')
-    //                     ->orWhere('phone', 'like', '%' . $staffs['search'] . '%');
-    //     }
-    // }
+    public function user()
+    {
+        return $this->hasOne(User::class);
+    }
+
 }

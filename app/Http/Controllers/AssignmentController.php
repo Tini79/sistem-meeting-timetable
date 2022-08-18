@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Validator;
 use App\Models\Assignment;
 use App\Models\Staff;
 use App\Models\Client;
@@ -10,31 +12,14 @@ use App\Models\Activity;
 
 class AssignmentController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        // $assignment = Assignment::latest()
-        //                 ->when(isset($request->search), function($query) use($request) {
-        //                     $query->whereHas('staff', function($query2) use($request) {
-        //                         $query2->where('name', 'like', '%' . $request->search . '%');
-        //                     })
-        //                     ->orWhereHas('client', function($query3) use($request) {
-        //                         $query3->where('company_name', 'like', '%' . $request->search . '%');
-        //                     })
-        //                     ->orWhereHas('activity', function($query4) use($request) {
-        //                         $query4->where('activity', 'like', '%' . $request->search . '%');
-        //                     });
-        //                 })
-        //                 ->orWhere('startDate', 'like', '%' . $request->search . '%')
-        //                 ->orWhere('endDate', 'like', '%' . $request->search . '%')
-        //                 ->paginate(10);
-
-        $assignment = Assignment::all();
+        $assignment = Assignment::latest()->get();
 
         return view('/assignment.index', [
             'title' => 'Meeting Timetable | Assignment',
             'assignments' => $assignment,
         ]);
-        
     }
 
     public function create()
@@ -54,14 +39,28 @@ class AssignmentController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'staff_id' => 'required',
+            'staff_id' => ['required', Rule::unique('assignments')->where(function ($q) use($request) {
+                return $q->where('startDate', '<=', $request->startDate)->where('endDate', '>=', $request->startDate);
+            })],
             'client_id' => 'required',
-            'activity_id' => 'required',
-            'startDate' => 'required',
-            'endDate' => 'required',
-            'note' => 'required|max:100'
+            'activity_id' => ['required', Rule::unique('assignments')->where(function ($q) use($request) {
+                return $q->where('client_id', $request->client_id);
+            })],
+            'startDate' => ['required', Rule::unique('assignments')->where(function ($q) use($request) {
+                return $q->where('staff_id', $request->staff_id);
+            })],
+            'endDate' => ['required', Rule::unique('assignments')->where(function ($q) use($request) {
+                return $q->where('staff_id', $request->staff_id);
+            })],
+            'note' => ''
+        ],
+        [
+            'staff_id.required' => 'The staff\'s name field is required.',
+            'client_id.required' => 'The client\'s name field is required.',
+            'activity_id.required' => 'The activity field is required.',
         ]);
 
+        // dd($request);
         Assignment::create($validatedData);
 
         return redirect('/assignment/dataassignment');
@@ -103,18 +102,29 @@ class AssignmentController extends Controller
             'activity_id' => 'required',
             'startDate' => 'required',
             'endDate' => 'required',
-            'note' => 'required|max:100'
+            'note' => ''
+        ],
+        [
+            'staff_id.required' => 'The staff\'s name field is required.',
+            'client_id.required' => 'The client\'s name field is required.',
+            'activity_id.required' => 'The activity field is required.',
         ]);
 
         if($req->staff_id != $assignment->staff_id) {
-            $req->validate(['staff_id' => 'required']);
+            $req->validate(['staff_id' => ['required', Rule::unique('assignments')->where(function ($q) use($req) {
+                return $q->where('startDate', '<=', $req->startDate)->where('endDate', '>=', $req->startDate);
+            })->ignore($assignment->id)]]);
         }
         if($req->client_id != $assignment->client_id) {
             $req->validate(['client_id' => 'required']);
         }
+        // Today, August 3, it works well tho, so weird
         if($req->activity_id != $assignment->activity_id) {
-            $req->validate(['activity_id' => 'required']);
+            $req->validate(['activity_id' => ['required', Rule::unique('assignments')->where(function ($q) use($req) {
+                return $q->where('client_id', $req->client_id);
+            })->ignore($assignment->id)]]);
         }
+        // itu doang
         if($req->date != $assignment->startDate) {
             $req->validate(['startDate' => 'required']);
         }
@@ -122,9 +132,8 @@ class AssignmentController extends Controller
             $req->validate(['endDate' => 'required']);
         }
         if($req->note != $assignment->note) {
-            $req->validate(['note' => 'required|max:100']);
+            $req->validate(['note' => '']);
         }
-
         $assignment->update([
             'staff_id' => $req->staff_id,
             'client_id' => $req->client_id,
@@ -133,6 +142,13 @@ class AssignmentController extends Controller
             'endDate' => $req->endDate,
             'note' => $req->note
         ]);
+
+        return redirect('/assignment/dataassignment');
+    }
+
+    public function destroy($id)
+    {
+        Assignment::destroy($id);
 
         return redirect('/assignment/dataassignment');
     }

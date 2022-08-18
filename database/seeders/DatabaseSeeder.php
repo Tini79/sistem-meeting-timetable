@@ -26,9 +26,9 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        Staff::factory(30)->create();
+        Staff::factory(15)->create();
 
-        Client::factory(30)->create();
+        Client::factory(15)->create();
 
         $activities = [
             [
@@ -46,12 +46,13 @@ class DatabaseSeeder extends Seeder
             Activity::create($activity);
         }
 
-        Assignment::factory(30)->create();
+        Assignment::factory(5)->create();
 
         User::create([
             'staff_id' => 1,
-            'username' => 'Tin',
-            'password' => bcrypt('admin')
+            'username' => 'Tini',
+            'password' => bcrypt('admin'),
+            // 'level' => 1
         ]);
     }
 }

@@ -15,13 +15,13 @@ return new class extends Migration
     {
         Schema::create('assignments', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
-            $table->foreignId('staff_id');
-            $table->foreignId('client_id');
-            $table->foreignId('activity_id');
+            $table->foreignId('staff_id')->index()->constrained('staffs')->onDelete('cascade');
+            $table->foreignId('client_id')->index()->constrained('clients')->onDelete('cascade');
+            $table->foreignId('activity_id')->index()->constrained('activities')->onDelete('cascade');
             $table->date('startDate');
             $table->date('endDate');
-            $table->text('note');
+            $table->text('note')->nullable();
+            $table->timestamps();
         });
     }
 

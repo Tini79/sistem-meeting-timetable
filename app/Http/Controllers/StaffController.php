@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\Models\Staff;
+use App\Models\User;
 
 class StaffController extends Controller
 {
@@ -14,10 +16,7 @@ class StaffController extends Controller
      */
     public function index()
     {
-        // $staff = Staff::staff(request(['search']))
-        //                 ->latest()->paginate(3);
-
-        $staff = Staff::all();
+        $staff = Staff::latest()->get();
 
         return view('/staff.index', [
             'title' => 'Meeting Timetable | Staff',
@@ -32,8 +31,22 @@ class StaffController extends Controller
      */
     public function create()
     {
+        $staffs = Staff::get('letter_code');
+
+        
+        foreach($staffs as $staff) {
+            $taken = $staff->letter_code;
+            // dump($taken);
+        }
+        
+        foreach(range('a', 'z') as $letter) {
+            $staff_codes[] = $letter;
+        }
+            
         return view('/staff.create', [
             'title' => 'Meeting Timetable | Tambah Staff',
+            'staffs' => $staffs,
+            'codes' => $staff_codes,
         ]);
     }
 
@@ -47,10 +60,29 @@ class StaffController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required|min:5|max:100',
-            'phone' => 'required|max:13'
+            'letter_code' => ['required', 'max:1', Rule::unique('staffs')->where(function($q) use($request) {
+                return $q->where('letter_code', $request->letter_code);
+            })],
+            'phone' => 'required|max:13',
+            'username' => 'required',
+            'password' => 'required|min:5',
+            'staff_id' => ''
         ]);
 
-        Staff::create($validatedData);
+        
+        $validatedData['password'] = bcrypt($validatedData['password']);
+
+        $staff = Staff::create($validatedData);
+        $staffIds = $staff->latest()->get('id')->take(1);
+
+        foreach($staffIds as $staffId){
+                $id = $staffId->id;
+                User::insert([
+                    'username' => $validatedData['username'],
+                    'password' => $validatedData['password'],
+                    'staff_id' => $id
+                ]);
+            }
 
         return redirect('/staff/datastaff');
     }
@@ -67,7 +99,7 @@ class StaffController extends Controller
 
         return view('/staff.show', [
             'title' => 'Meeting Table | Staff Detail',
-            'staff' => $staff
+            'staff' => $staff,
         ]);
     }
 
@@ -79,11 +111,11 @@ class StaffController extends Controller
      */
     public function edit($id)
     {
-        $staff = Staff::find($id);
+        $staff = Staff::with('user')->find($id);
 
         return view('/staff.edit', [
             'title' => 'Meeting Timetable | Edit Staff',
-            'staff' => $staff
+            'staff' => $staff,
         ]);
     }
 
@@ -96,21 +128,35 @@ class StaffController extends Controller
      */
     public function update(Request $req, $id)
     {
-        $staff = Staff::find($id);
+        $staff = Staff::with('user')->find($id);
 
         $req->validate([
             'name' => 'required|min:5|max:100',
-            'phone' => 'required|max:13'
+            'letter_code' => 'required|max:1',
+            'phone' => 'required|max:13',
+            'username' => 'required',
         ]);
+        
 
         if($req->name != $staff->name)
         $req->validate(['name' => 'required']);
+        if($req->letter_code != $staff->letter_code)
+        $req->validate(['letter_code' => ['required', Rule::unique('staffs')->where(function($q) use($req) {
+            return $q->where('letter_code', $req->letter_code);
+        })]]);
         if($req->phone != $staff->phone)
         $req->validate(['phone' => 'required']);
+        if($req->username != $staff->user->username)
+        $req->validate(['username' => 'required']);
 
         $staff->update([
             'name' => $req->name,
-            'phone' => $req->phone
+            'letter_code' => $req->letter_code,
+            'phone' => $req->phone,
+        ]);
+        
+        $staff->user->update([
+            'username' => $req->username,
         ]);
 
         return redirect('/staff/datastaff');
@@ -126,6 +172,6 @@ class StaffController extends Controller
     {
         Staff::destroy($id);
 
-        return redirect('/staff/datastaff')->with('success', 'Berhasil hapus data!');
+        return redirect('/staff/datastaff');
     }
 }

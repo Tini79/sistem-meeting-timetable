@@ -17,10 +17,10 @@ class AssignmentFactory extends Factory
     public function definition()
     {
         return [
-            'startDate' => $this->faker->dateTimeBetween('-1 week', '+10 week'),
-            'endDate' => $this->faker->dateTimeBetween('-1 week', '+1 week'),
-            'note' => $this->faker->sentence(mt_rand(5,15)),
-            'staff_id' => mt_rand(1,5),
+            'startDate' => $this->faker->dateTimeBetween('-1 week', '+5 week'),
+            'endDate' => $this->faker->dateTimeBetween('+6 week', '+10 week'),
+            // 'note' => $this->faker->sentence(mt_rand(5,15)),
+            'staff_id' => mt_rand(1,10),
             'client_id' => mt_rand(1,5),
             'activity_id' => mt_rand(1,3)
         ];

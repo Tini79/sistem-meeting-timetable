@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Carbon\Carbon;
 
 class Assignment extends Model
 {
@@ -25,6 +24,7 @@ class Assignment extends Model
     //     // });
     // }
 
+    // Nama relasi : staff, client, activity
     public function staff()
     {
         return $this->belongsTo(Staff::class);

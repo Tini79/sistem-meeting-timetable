@@ -5,6 +5,8 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
  :root {
+    --widthSideBar: 250px;
+    --widthResponsive: 100%;
     --blue: #007bff;
     --indigo: #6610f2;
     --purple: #6f42c1;
@@ -75,7 +77,30 @@
   p {
     margin-top: 0;
     margin-bottom: 1rem; }
-  
+
+  /* my custom */
+  .text-sm{
+    font-size: 12px;
+  }
+
+  .custom-text-color{
+    color: #030303;
+  }
+
+  .select2-selection{
+    font-size:13px !important;
+  }
+
+  .datepicker{
+    padding: .375rem 2.25rem .375rem .75rem !important;
+  }
+
+  .flex-container{
+    display: flex;
+    flex-wrap: wrap;
+  }
+  /* poof */
+
   abbr[title],
   abbr[data-original-title] {
     text-decoration: underline;
@@ -122,6 +147,7 @@
   sub,
   sup {
     position: relative;
+    z-index: -1;
     font-size: 75%;
     line-height: 0;
     vertical-align: baseline; }
@@ -1592,7 +1618,7 @@
     display: block;
     width: 100%;
     height: calc(1.5em + 0.75rem + 2px);
-    padding: 0.375rem 0.75rem;
+    padding: .375rem 2.25rem .375rem .75rem;
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.5;
@@ -1681,11 +1707,11 @@
       padding-left: 0; }
   
   .form-control-sm {
-    height: calc(1.5em + 0.5rem + 2px);
-    padding: 0.25rem 0.5rem;
+    height: calc(1em + 0.5rem + 2px);
+    padding: 0.5rem 0.5rem;
     border: 1px solid #ced4da;
-    font-size: 0.875rem;
-    line-height: 1.5;
+    font-size: 0.7rem;
+    line-height: 0.5;
     border-radius: 0.2rem; }
   
   .form-control-lg {
@@ -3435,7 +3461,7 @@
     flex-wrap: wrap;
     -webkit-box-align: center;
     -ms-flex-align: center;
-    align-items: center;
+    /* align-items: center; */
     -webkit-box-pack: justify;
     -ms-flex-pack: justify;
     justify-content: space-between;
@@ -7953,7 +7979,7 @@
     .text-lg-center {
       text-align: center !important; } }
   
-  @media (min-width: 1200px) {
+  @media (min-width: 1200px) {  
     .text-xl-left {
       text-align: left !important; }
     .text-xl-right {
@@ -8208,8 +8234,8 @@
     width: 100%; }
   
   #sidebar {
-    min-width: 250px;
-    max-width: 250px;
+    min-width: var(--widthSideBar);
+    max-width: var(--widthSideBar);
     background: #3366ff;
     color: #fff;
     -webkit-transition: all 0.3s;
@@ -8221,8 +8247,8 @@
       color: #fff; }
     #sidebar.active {
       margin-left: -250px; }
-      #sidebar.active .custom-menu {
-        margin-right: -50px; }
+    #sidebar.active .custom-menu {
+      margin-right: -50px; }
     #sidebar h1 {
       margin-bottom: 20px;
       font-weight: 700; }
@@ -8270,7 +8296,7 @@
           transition: none; } }
       #sidebar .custom-menu .btn {
         /* width: 40px; */
-        height: 45px;
+        height: 40px;
         border-radius: 50%; }
         #sidebar .custom-menu .btn.btn-primary {
           background: #0040ff;
@@ -8296,13 +8322,17 @@
       display: none; } }
   
   #content {
-    width: 100%;
+    width: calc(100% - var(--widthSideBar));
     padding: 0;
     min-height: 100vh;
     -webkit-transition: all 0.3s;
     -o-transition: all 0.3s;
     transition: all 0.3s; }
   
+  .inside-content.action{
+    width: 100% !important;
+  }
+
   .btn.btn-primary {
     background: #3366ff;
     border-color: #3366ff; }
@@ -8314,7 +8344,8 @@
     color: rgba(255, 255, 255, 0.5); }
   
   .form-control {
-    height: 40px !important;
+    /* height: 40px !important; */
+    min-height: calc(1.5em + .75rem + 2px);
     background: #fff;
     color: #000;
     font-size: 13px;

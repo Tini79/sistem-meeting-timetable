@@ -20,10 +20,12 @@ use App\Http\Controllers\AssignmentController;
 |
 */
 
-Route::resource('/', AuthController::class);
-Route::post('/', [AuthController::class, 'authenticate']);
-Route::resource('/dashboard', DashboardController::class);
-Route::resource('/staff/datastaff', StaffController::class);
-Route::resource('/klien/dataklien', KlienController::class);
-Route::resource('/aktivitas/dataaktivitas', AktivitasController::class);
-Route::resource('/assignment/dataassignment', AssignmentController::class);
+Route::get('/login', [AuthController::class, 'index'])->name('login')->middleware('guest');
+Route::post('/login', [AuthController::class, 'authenticate']);
+Route::post('/logout', [AuthController::class, 'logout']);
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware('auth');
+Route::post('/dashboard', [DashboardController::class, 'filterDate']);
+Route::resource('/staff/datastaff', StaffController::class)->middleware('auth');
+Route::resource('/klien/dataklien', KlienController::class)->middleware('auth');
+Route::resource('/aktivitas/dataaktivitas', AktivitasController::class)->middleware('auth');
+Route::resource('/assignment/dataassignment', AssignmentController::class)->middleware('auth');

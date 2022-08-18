@@ -17,7 +17,7 @@ class AuthController extends Controller
     public function authenticate(Request $request)
     {
         $credentials = $request->validate([
-            'username' => 'required|max:10',
+            'username' => 'required|min:3|max:10',
             'password' => 'required|min:4|max:25'
         ]);
 
@@ -26,5 +26,14 @@ class AuthController extends Controller
             return redirect()->intended('/dashboard');
         }
         return back();
+    }
+
+    public function logout() {
+        Auth::logout();
+
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
+
+        return redirect('/login');
     }
 }

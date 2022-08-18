@@ -9,7 +9,7 @@ class KlienController extends Controller
 {
     public function index() 
     {
-        $client = Client::all();
+        $client = Client::latest()->get();
         
         return view('/klien.index', [
             'title' => 'Meeting Timetable | Klien',

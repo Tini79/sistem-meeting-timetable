@@ -11,7 +11,7 @@ class Activity extends Model
 
     protected $guarded = [''];
 
-    public function Assignments()
+    public function assignments()
     {
         return $this->hasMany(Assignment::class);
     }

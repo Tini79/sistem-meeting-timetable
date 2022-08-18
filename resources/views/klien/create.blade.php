@@ -1,7 +1,7 @@
 @extends('layouts.main')
 @section('content')
 <h1>Klien <sup class="text-secondary">Tambah</sup></h1>
-<div class="bg-white p-5">
+<div class="bg-white p-5 w-100">
     <form action="/klien/dataklien" method="post">
         @csrf
         <div class="form-group">
