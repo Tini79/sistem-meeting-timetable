@@ -8322,7 +8322,7 @@
       display: none; } }
   
   #content {
-    width: calc(100% - var(--widthSideBar));
+    width: calc(100% - var(--widthSideBar)) !important;
     padding: 0;
     min-height: 100vh;
     -webkit-transition: all 0.3s;

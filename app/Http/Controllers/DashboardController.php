@@ -12,9 +12,7 @@ use Carbon\CarbonPeriod;
 class DashboardController extends Controller
 {
     public function index(Request $request) 
-    {
-        // eagerload data dari table assignments
-        // dari table assignments mengambil relasi dengan activity dan staff
+    {     
         $datas = Client::with(['assignments' => function($q) {
             $q->orderBy('activity_id');
         }], 'assignments', 'assignments.activity', 'assignments.staff')->get();
@@ -60,12 +58,9 @@ class DashboardController extends Controller
                             $clientName = $assignment->client->company_name;
                             if($clientAssignment != $clientName) {
                                 $clientAssignment = $clientName;
-                                // if(count($columnRange) > 0) {
-                                //     $counted = count($columnRange) + count($columnRange);
-                                //     $table .= '<tr><td rowspan="'.$counted.'" class="bg-primary text-white text-sm col-4">'.$clientAssignment.'</td>';
-                                // } else {
-                                    $table .= '<tr><td rowspan="'.count($columnRange).'" class="bg-primary text-white text-sm col-4">'.$clientAssignment.'</td>';
-                                // }
+                                    $counted = count($columnRange) + count($columnRange);
+                                    // $table .= '<tr><td rowspan="'.count($columnRange).'" class="bg-primary text-white text-sm col-4">'.$clientAssignment.'</td>';
+                                    $table .= '<tr><td rowspan="'.$counted.'" class="bg-primary text-white text-sm col-4">'.$clientAssignment.'</td>';
                             } else {
                                 $table .= '</tr>';
                             }
@@ -87,6 +82,7 @@ class DashboardController extends Controller
                             }
                         } else {
                             $table .= '</tr>';
+                            // $table .= '';
                         }
                     }
                 }
@@ -102,7 +98,6 @@ class DashboardController extends Controller
                         }
                     } else {
                         $table .= '<td></td>';
-                        // $table .= '';
                     }
                 }
             }

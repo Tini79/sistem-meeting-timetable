@@ -39,20 +39,12 @@ class AssignmentController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'staff_id' => ['required', Rule::unique('assignments')->where(function ($q) use($request) {
-                return $q->where('startDate', '<=', $request->startDate)->where('endDate', '>=', $request->startDate);
-            })],
+            'staff_id' => 'required',
             'client_id' => 'required',
-            'activity_id' => ['required', Rule::unique('assignments')->where(function ($q) use($request) {
-                return $q->where('client_id', $request->client_id);
-            })],
-            'startDate' => ['required', Rule::unique('assignments')->where(function ($q) use($request) {
-                return $q->where('staff_id', $request->staff_id);
-            })],
-            'endDate' => ['required', Rule::unique('assignments')->where(function ($q) use($request) {
-                return $q->where('staff_id', $request->staff_id);
-            })],
-            'note' => ''
+            'activity_id' => 'required',
+            'startDate' => 'required',
+            'endDate' => 'required',
+            'note' => '',
         ],
         [
             'staff_id.required' => 'The staff\'s name field is required.',
@@ -60,7 +52,16 @@ class AssignmentController extends Controller
             'activity_id.required' => 'The activity field is required.',
         ]);
 
+        $validatedData = $request->validate([
+            'staff_id' => Rule::unique('assignments')->where(function ($q) use($request) {
+                return $q->where('startDate', '<=', $request->startDate)->where('endDate', '>=', $request->startDate);
+        })]);
+
+        // $validatedData['staff_id'] = Rule::unique('assignments')->where(function ($q) use($request) {
+        //     return $q->where('startDate', '<=', $request->startDate)->where('endDate', '>=', $request->startDate);
+        // });
         // dd($request);
+
         Assignment::create($validatedData);
 
         return redirect('/assignment/dataassignment');
@@ -94,8 +95,9 @@ class AssignmentController extends Controller
 
     public function update(Request $req, $id)
     {
+        
         $assignment = Assignment::find($id);
-
+        
         $req->validate([
             'staff_id' => 'required',
             'client_id' => 'required',
