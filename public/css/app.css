@@ -99,6 +99,28 @@
     display: flex;
     flex-wrap: wrap;
   }
+
+  #content {
+    width: 100% !important;
+    overflow-x: scroll;
+    padding: 0;
+    min-height: 100vh;
+    -webkit-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s; }
+
+  .inner-sidebar {
+    overflow-y:scroll;
+    max-height:100vh;
+  }
+  ::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+  }
+
+  .overflow-auto {
+    overflow-x: auto;
+  }
   /* poof */
 
   abbr[title],
@@ -8242,7 +8264,7 @@
     -o-transition: all 0.3s;
     transition: all 0.3s;
     position: relative;
-    top:-40px; }
+    top: 20;}
     #sidebar .h6 {
       color: #fff; }
     #sidebar.active {
@@ -8320,15 +8342,7 @@
   @media (max-width: 991.98px) {
     #sidebarCollapse span {
       display: none; } }
-  
-  #content {
-    width: calc(100% - var(--widthSideBar)) !important;
-    padding: 0;
-    min-height: 100vh;
-    -webkit-transition: all 0.3s;
-    -o-transition: all 0.3s;
-    transition: all 0.3s; }
-  
+    
   .inside-content.action{
     width: 100% !important;
   }

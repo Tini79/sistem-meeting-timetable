@@ -18,6 +18,7 @@ class DashboardController extends Controller
         }], 'assignments', 'assignments.activity', 'assignments.staff')->get();
 
         $rangeDate = [Carbon::now(), Carbon::now()->addDay(5)];
+
         if($request->has('dateFilter')){
             $stringDateRange = $request->dateFilter;
             $rangeDate = explode(' - ', $stringDateRange);
@@ -52,15 +53,14 @@ class DashboardController extends Controller
             foreach($data->assignments as $assignment) {
                 // Additional
                 $dates = CarbonPeriod::create(Carbon::parse($assignment->startDate), Carbon::parse($assignment->endDate));
-                foreach($periods as $period) {   
+                foreach($periods as $period) {
                     foreach($dates as $date) {
                         if($period == $date) {
                             $clientName = $assignment->client->company_name;
                             if($clientAssignment != $clientName) {
                                 $clientAssignment = $clientName;
-                                    $counted = count($columnRange) + count($columnRange);
-                                    // $table .= '<tr><td rowspan="'.count($columnRange).'" class="bg-primary text-white text-sm col-4">'.$clientAssignment.'</td>';
-                                    $table .= '<tr><td rowspan="'.$counted.'" class="bg-primary text-white text-sm col-4">'.$clientAssignment.'</td>';
+                                $totalRange = count($columnRange) + count($columnRange);
+                                $table .= '<tr><td rowspan="'.$totalRange.'" class="bg-primary text-white text-sm col-4">'.$clientAssignment.'</td>';
                             } else {
                                 $table .= '</tr>';
                             }
@@ -82,7 +82,6 @@ class DashboardController extends Controller
                             }
                         } else {
                             $table .= '</tr>';
-                            // $table .= '';
                         }
                     }
                 }

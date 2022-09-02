@@ -39,12 +39,16 @@ class AssignmentController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'staff_id' => 'required',
             'client_id' => 'required',
             'activity_id' => 'required',
             'startDate' => 'required',
             'endDate' => 'required',
             'note' => '',
+            'staff_id' => ['required', Rule::unique('assignments')->where(function ($q) use($request) {
+                if($request->startDate) {
+                    return $q->where('startDate', '<=', $request->startDate)->where('endDate', '>=', $request->startDate);
+                }
+        })],
         ],
         [
             'staff_id.required' => 'The staff\'s name field is required.',
@@ -52,10 +56,8 @@ class AssignmentController extends Controller
             'activity_id.required' => 'The activity field is required.',
         ]);
 
-        $validatedData = $request->validate([
-            'staff_id' => Rule::unique('assignments')->where(function ($q) use($request) {
-                return $q->where('startDate', '<=', $request->startDate)->where('endDate', '>=', $request->startDate);
-        })]);
+        // $validatedData = $request->validate([
+        //     'staff_id' => ;
 
         // $validatedData['staff_id'] = Rule::unique('assignments')->where(function ($q) use($request) {
         //     return $q->where('startDate', '<=', $request->startDate)->where('endDate', '>=', $request->startDate);

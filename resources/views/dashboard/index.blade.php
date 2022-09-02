@@ -6,11 +6,11 @@
             @csrf
             <div class="input-group-sm d-flex col-lg">
                 <input type="text" name="dateFilter" class="form-control" value="" required/>
-                <button type="submit" class="btn btn-primary btn-sm" id="pickDateRange">Cari</button>
+                <button type="submit" class="btn btn-primary btn-sm">Cari</button>
             </div>
         </form>
     </div>
-    <div>
+    <div class="overflow-auto">
         <table border=1 class="table-sm table-bordered w-100" id="tableAssignment">
                 {!! $table !!}
         </table>

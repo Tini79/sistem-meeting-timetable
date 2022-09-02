@@ -8,7 +8,7 @@
         <a href="/staff/datastaff/create" class="btn btn-outline-primary">Tambah</a>
     </div>
     <div class="mt-3 bg-white p-5">
-        <div>
+        <div class="overflow-auto">
             <table id="example" class="display dataTable table" style="width:100%" aria-describedby="example_info">
                 <thead class="bg-primary">
                     <tr>
@@ -48,15 +48,15 @@
                                                 <div class="modal-header flex-column">
                                                     <div class="icon-box">
                                                         <i class="material-icons">&#xE5CD;</i>
-                                                    </div>						
-                                                    <h4 class="modal-title w-100">Are you sure?</h4>	
+                                                    </div>	
+                                                    <h4 class="modal-title w-100">Apakah Anda yakin?</h4>						
                                                 </div>
                                                 <div class="modal-body">
-                                                    <p>Do you really want to delete this record? This process cannot be undone.</p>
+                                                    <p>Apakah Anda yakin untuk menghapus data ini?</p>
                                                 </div>
                                                 <div class="modal-footer justify-content-center">
-                                                    <button type="button" class="btn btn-secondary" id="closeModal" data-dismiss="modal">Cancel</button>
-                                                    <button class="btn btn-danger">Delete</button>
+                                                    <button type="button" class="btn btn-secondary" id="closeModal" data-dismiss="modal">Batal</button>
+                                                    <button class="btn btn-danger">Hapus</button>
                                                 </div>
                                             </div>
                                         </div>

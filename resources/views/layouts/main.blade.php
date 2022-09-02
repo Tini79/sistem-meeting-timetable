@@ -138,7 +138,7 @@
     </nav>
     <section class="wrapper d-flex align-items-stretch mt-5">
         @include('partials.sidebar')
-        <div id="content" class="inside-content p-4 p-md-5 pt-5 flex-container w-100">
+        <div id="content" class="inside-content p-4 p-md-5 pt-5 flex-container">
             @yield('content')
         </div>
         @else
@@ -233,6 +233,9 @@
 
         $(document).ready(function(){
             $('.delete-btn').on('click', function() {
+                $('#myModal').modal('show');
+            })
+            $('.confirm-btn').on('click', function() {
                 $('#myModal').modal('show');
             })
             $('#closeModal').click(function() {
