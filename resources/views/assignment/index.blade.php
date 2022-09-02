@@ -37,8 +37,8 @@
                         <td>{{ $a->staff->name }}</td>
                         <td>{{ $a->client->company_name }}</td>
                         <td>{{ $a->activity->activity }}</td>
-                        <td>{{ showDateTime($a->startDate, 'd-m-Y') }}</td>
-                        <td>{{ showDateTime($a->endDate, 'd-m-Y') }}</td>
+                        <td>{{ showDateTime($a->start_date, 'd-m-Y') }}</td>
+                        <td>{{ showDateTime($a->end_date, 'd-m-Y') }}</td>
                         <td>
                             <div class="btn-group">
                                 <a href="/assignment/dataassignment/{{ $a->id }}" class="btn btn-sm"><i class="fa-regular fa-eye text-muted"></i></a>

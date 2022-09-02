@@ -53,30 +53,30 @@
             @enderror
         </div>
         <div class="form-group">
-            <label for="startDate">Tanggal Mulai</label>
+            <label for="start_date">Tanggal Mulai</label>
             <div class="input-group">
-                <input type="text" name="startDate" value="{{ old('startDate') }}" class="form-control datepicker @error('startDate') is-invalid @enderror">
+                <input type="text" name="start_date" value="{{ old('start_date') }}" class="form-control datepicker @error('start_date') is-invalid @enderror">
                 <span class="input-group-append">
                     <span class="input-group-text">
                         <i class="fa-solid fa-calendar-days"></i>
                     </span>
                 </span>
             </div>
-            @error('startDate')
+            @error('start_date')
             <div class="alert alert-danger">{{ $message }}</div>
             @enderror
         </div>
         <div class="form-group">
-            <label for="endDate">Tanggal Selesai</label>
+            <label for="end_date">Tanggal Selesai</label>
             <div class="input-group">
-                <input type="text" name="endDate" value="{{ old('endDate') }}" class="form-control datepicker @error('endDate') is-invalid @enderror">
+                <input type="text" name="end_date" value="{{ old('end_date') }}" class="form-control datepicker @error('end_date') is-invalid @enderror">
                 <span class="input-group-append">
                     <span class="input-group-text">
                         <i class="fa-solid fa-calendar-days"></i>
                     </span>
                 </span>
             </div>
-            @error('endDate')
+            @error('end_date')
             <div class="alert alert-danger">{{ $message }}</div>
             @enderror
         </div>

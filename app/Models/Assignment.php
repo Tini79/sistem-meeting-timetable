@@ -14,17 +14,9 @@ class Assignment extends Model
     protected $guarded = [''];
 
     protected $dates = [
-        'startDate', 'endDate'
+        'start_date', 'end_date'
     ];
 
-    // public function scopeAssignment($query, array $assignments)
-    // {
-    //     // return $query->whereHas('staff', function($query, $assignments) {
-            
-    //     // });
-    // }
-
-    // Nama relasi : staff, client, activity
     public function staff()
     {
         return $this->belongsTo(Staff::class);

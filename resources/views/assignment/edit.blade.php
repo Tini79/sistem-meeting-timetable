@@ -10,7 +10,7 @@
             <select name="staff_id" class="form-control select2 @error('staff_id') is-invalid @enderror" data-width="100%">
                 <option disable selected value>-- Pilih nama staff --</option>
                 @foreach($staffs as $staff)
-                @if (old('staff_id', $assignment->client_id) == $staff->id)
+                @if (old('staff_id', $assignment->staff_id) == $staff->id)
                 <option value="{{ $staff->id }}" selected>{{ $staff->name }}</option>
                 @else
                 <option value="{{ $staff->id }}">{{ $staff->name}}</option>
@@ -54,30 +54,30 @@
             @enderror
         </div>
         <div class="form-group">
-            <label for="startDate" class="form-text">Tanggal Mulai</label>
+            <label for="start_date" class="form-text">Tanggal Mulai</label>
             <div class="input-group">
-                <input type="text" name="startDate" class="form-control datepicker @error('startDate') is-invalid @enderror" value="{{ old('startDate', $assignment->startDate) }}">
+                <input type="text" name="start_date" class="form-control datepicker @error('start_date') is-invalid @enderror" value="{{ old('start_date', $assignment->start_date) }}">
                 <span class="input-group-append">
                     <span class="input-group-text">
                         <i class="fa-solid fa-calendar-days"></i>
                     </span>
                 </span>
             </div>
-            @error('startDate')
+            @error('start_date')
             <div class="alert alert-danger">{{ $message }}</div>
             @enderror
         </div>
         <div class="form-group">
-            <label for="endDate" class="form-text">Tanggal Selesai</label>
+            <label for="end_date" class="form-text">Tanggal Selesai</label>
             <div class="input-group">
-                <input type="text" name="endDate" value="{{ old('endDate', $assignment->endDate) }}" class="form-control datepicker @error('endDate') is-invalid @enderror">
+                <input type="text" name="end_date" value="{{ old('end_date', $assignment->end_date) }}" class="form-control datepicker @error('end_date') is-invalid @enderror">
                 <span class="input-group-append">
                     <span class="input-group-text">
                         <i class="fa-solid fa-calendar-days"></i>
                     </span>
                 </span>
             </div>
-            @error('endDate')
+            @error('end_date')
             <div class="alert alert-danger">{{ $message }}</div>
             @enderror
         </div>

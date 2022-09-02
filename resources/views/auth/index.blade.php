@@ -2,7 +2,7 @@
 @section('content')
 <div class="container col-md-5 mt-5">
     <div class="bg-white p-5">
-        <form action="/login" method="post">
+        <form action="/" method="post">
             @csrf
             <h1 class="text-center">Login</h1>
             <div class="form-group">

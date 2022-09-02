@@ -35,11 +35,8 @@ class DashboardController extends Controller
         $table .= '</tr></tr></thead><td colspan="3"></td>';
 
         $jumlahStaff = Staff::count();
-        // Loop pada setiap tanggal
         foreach($periods as $period) {
-            // distinct : membedakan >> mencari data yang berbeda saja
-                $jumlahStaffAssignments = Assignment::distinct('staff_id')->where('startDate', '<=', $period)->where('endDate', '>=', $period)->count();
-                // Return jumlah staff yang tidak memiliki jadwal meeting dengan client
+                $jumlahStaffAssignments = Assignment::distinct('staff_id')->where('start_date', '<=', $period)->where('end_date', '>=', $period)->count();
                 $table .= '<td class="text-center">'.($jumlahStaff - $jumlahStaffAssignments).'/'.($jumlahStaff).'</td>';
         }
 
@@ -52,7 +49,7 @@ class DashboardController extends Controller
             $staffAssignment = '';
             foreach($data->assignments as $assignment) {
                 // Additional
-                $dates = CarbonPeriod::create(Carbon::parse($assignment->startDate), Carbon::parse($assignment->endDate));
+                $dates = CarbonPeriod::create(Carbon::parse($assignment->start_date), Carbon::parse($assignment->end_date));
                 foreach($periods as $period) {
                     foreach($dates as $date) {
                         if($period == $date) {
@@ -89,7 +86,7 @@ class DashboardController extends Controller
 
                 foreach($periods as $period) {
                     // Carbon's between function >> between function hanya bisa digunakan pada object Carbon which is $period
-                    if($period->between($assignment->startDate, $assignment->endDate)) {
+                    if($period->between($assignment->start_date, $assignment->end_date)) {
                         foreach($dates as $date) {
                             if($period == $date) {
                                 $table .= '<td class="text-center text-uppercase bg-info custom-text-color font-weight-bolder">'.$assignment->staff->letter_code.'</td>';

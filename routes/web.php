@@ -19,8 +19,8 @@ use App\Http\Controllers\LaporanStaffController;
 */
 
 // Route login & logout
-Route::get('/login', [AuthController::class, 'index'])->name('login')->middleware('guest');
-Route::post('/login', [AuthController::class, 'authenticate']);
+Route::get('/', [AuthController::class, 'index'])->name('/')->middleware('guest');
+Route::post('/', [AuthController::class, 'authenticate']);
 Route::post('/logout', [AuthController::class, 'logout']);
 
 // Route dashboard
@@ -33,14 +33,14 @@ Route::resource('/aktivitas/dataaktivitas', AktivitasController::class)->middlew
 Route::resource('/assignment/dataassignment', AssignmentController::class)->middleware('auth');
 
 // Route Report
-Route::get('/laporan/staff', [LaporanStaffController::class, 'index']);
-Route::get('/laporan/staff/printpdf', [LaporanStaffController::class, 'printPdf']);
+Route::get('/laporan/staff', [LaporanStaffController::class, 'index'])->middleware('auth');
+Route::get('/laporan/staff/printpdf', [LaporanStaffController::class, 'printPdf'])->middleware('auth');
 
-Route::get('/laporan/klien', [LaporanKlienController::class, 'index']);
-Route::get('/laporan/klien/printpdf', [LaporanKlienController::class, 'printpdf']);
+Route::get('/laporan/klien', [LaporanKlienController::class, 'index'])->middleware('auth');
+Route::get('/laporan/klien/printpdf', [LaporanKlienController::class, 'printpdf'])->middleware('auth');
 
-Route::get('/laporan/aktivitas', [LaporanAktivitasController::class, 'index']);
-Route::get('/laporan/aktivitas/printpdf', [LaporanAktivitasController::class, 'printpdf']);
+Route::get('/laporan/aktivitas', [LaporanAktivitasController::class, 'index'])->middleware('auth');
+Route::get('/laporan/aktivitas/printpdf', [LaporanAktivitasController::class, 'printpdf'])->middleware('auth');
 
-Route::get('/laporan/assignment', [LaporanAssignmentController::class, 'index']);
-Route::get('/laporan/assignment/printpdf', [LaporanAssignmentController::class, 'printpdf']);
+Route::get('/laporan/assignment', [LaporanAssignmentController::class, 'index'])->middleware('auth');
+Route::get('/laporan/assignment/printpdf', [LaporanAssignmentController::class, 'printpdf'])->middleware('auth');

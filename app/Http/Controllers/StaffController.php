@@ -31,14 +31,8 @@ class StaffController extends Controller
      */
     public function create()
     {
-        $staffs = Staff::get('letter_code');
+        $staffs = Staff::all();
 
-        
-        foreach($staffs as $staff) {
-            $taken = $staff->letter_code;
-            // dump($taken);
-        }
-        
         foreach(range('a', 'z') as $letter) {
             $staff_codes[] = $letter;
         }

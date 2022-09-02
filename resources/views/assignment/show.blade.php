@@ -28,8 +28,8 @@
                     <p>{{ $assignment->client->company_name }}</p>
                     <p>{{ $assignment->staff->name }}</p>
                     <p>{{ $assignment->activity->activity }}</p>
-                    <p>{{ date('d-m-Y', strtotime($assignment->startDate)) }}</p>
-                    <p>{{ date('d-m-Y', strtotime($assignment->endDate)) }}</p>
+                    <p>{{ date('d-m-Y', strtotime($assignment->start_date)) }}</p>
+                    <p>{{ date('d-m-Y', strtotime($assignment->end_date)) }}</p>
                 </div>
             </div>
         </div>
