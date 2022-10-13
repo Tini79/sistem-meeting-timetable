@@ -14,7 +14,8 @@ class LaporanStaffController extends Controller
      */
     public function index()
     {
-        $staffs = Staff::latest()->get();
+        $staffs = Staff::orderBy('letter_code', 'ASC')->get();
+
         return view('/laporan.staff.index', [
             'title' => 'Meeting Timetable | Laporan Data Staff',
             'staffs' => $staffs
@@ -28,10 +29,10 @@ class LaporanStaffController extends Controller
      */
     public function printPdf()
     {
-        $staffs = Staff::latest()->get();
-        
+        $staffs = Staff::orderBy('letter_code', 'ASC')->get();
+
         $pdf = PDF::loadView('/laporan.staff.pdf', ['staffs' => $staffs]);
-    
+
         return $pdf->stream();
     }
 }

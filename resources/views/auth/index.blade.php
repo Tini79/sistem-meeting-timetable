@@ -5,6 +5,9 @@
         <form action="/" method="post">
             @csrf
             <h1 class="text-center">Login</h1>
+            @if(session()->has('danger'))
+            <div class="alert alert-danger">{{ session('danger') }}</div>
+            @endif
             <div class="form-group">
                 <label for="username" class="form-text">Username</label>
                 <input type="text" class="form-control @error('username') is-invalid @enderror" name="username">

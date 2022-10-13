@@ -88,7 +88,7 @@
             <div class="alert alert-danger">{{ $message }}</div>
             @enderror
         </div>
-        
+
         <!-- Modal HTML -->
         <div id="myModal" class="modal fade">
             <div class="modal-dialog modal-confirm">
@@ -96,8 +96,8 @@
                     <div class="modal-header flex-column">
                         <div class="icon-box">
                             <i class="material-icons">&#x21;</i>
-                        </div>						
-                        <h4 class="modal-title w-100">Apakah Anda yakin?</h4>	
+                        </div>
+                        <h4 class="modal-title w-100">Apakah Anda yakin?</h4>
                     </div>
                     <div class="modal-body">
                         <p>Apakah Anda ingin menyimpan data ini?</p>
@@ -108,7 +108,7 @@
                     </div>
                 </div>
             </div>
-        </div>     
+        </div>
     </form>
     <button class="btn btn-primary confirm-btn">Simpan</button>
     <a href="/assignment/dataassignment" class="btn btn-secondary">Kembali</a>

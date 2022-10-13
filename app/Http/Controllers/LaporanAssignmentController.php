@@ -9,7 +9,9 @@ class LaporanAssignmentController extends Controller
 {
     public function index()
     {
-        $assignment = Assignment::latest()->get();
+        $assignment = Assignment::with(['staff' => function ($q) {
+            $q->orderBy('name');
+        }])->get();
 
         return view('/laporan/assignment.index', [
             'title' => 'Meeting Timetable | Laporan Data Assignment',
@@ -19,10 +21,12 @@ class LaporanAssignmentController extends Controller
 
     public function printPdf()
     {
-        $assignments = Assignment::latest()->get();
-        
+        $assignments = Assignment::with(['staff' => function ($q) {
+            $q->orderBy('name');
+        }])->get();
+
         $pdf = PDF::loadView('/laporan.assignment.pdf', ['assignments' => $assignments]);
-    
+
         return $pdf->stream();
     }
 }

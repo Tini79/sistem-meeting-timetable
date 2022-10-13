@@ -5,7 +5,7 @@
 </div>
 <div class="w-100">
     <div class="row justify-content-end mr-1">
-        <a href="/staff/datastaff/create" class="btn btn-outline-primary">Tambah</a>
+        <a href="/tools/staff/datastaff/create" class="btn btn-outline-primary">Tambah</a>
     </div>
     <div class="mt-3 bg-white p-5">
         <div class="overflow-auto">
@@ -35,10 +35,10 @@
                         <td>{{ $s->phone }}</td>
                         <td>
                             <div class="btn-group">
-                                <a href="/staff/datastaff/{{ $s->id }}" class="btn btn-sm"><i class="fa-regular fa-eye text-muted"></i></a>
-                                <a href="/staff/datastaff/{{ $s->id }}/edit" class="btn btn-sm"><i class="fa-regular fa-pen-to-square text-info"></i></a>
+                                <a href="/tools/staff/datastaff/{{ $s->id }}" class="btn btn-sm"><i class="fa-regular fa-eye text-muted"></i></a>
+                                <a href="/tools/staff/datastaff/{{ $s->id }}/edit" class="btn btn-sm"><i class="fa-regular fa-pen-to-square text-info"></i></a>
                                 <button class="btn btn-sm delete-btn"><i class="fa-solid fa-trash text-danger"></i></button>
-                                <form action="/staff/datastaff/{{ $s->id }}" method="post">
+                                <form action="/tools/staff/datastaff/{{ $s->id }}" method="post">
                                     @csrf
                                     @method('DELETE')
                                     <!-- Modal HTML -->
@@ -48,8 +48,8 @@
                                                 <div class="modal-header flex-column">
                                                     <div class="icon-box">
                                                         <i class="material-icons">&#xE5CD;</i>
-                                                    </div>	
-                                                    <h4 class="modal-title w-100">Apakah Anda yakin?</h4>						
+                                                    </div>
+                                                    <h4 class="modal-title w-100">Apakah Anda yakin?</h4>
                                                 </div>
                                                 <div class="modal-body">
                                                     <p>Apakah Anda yakin untuk menghapus data ini?</p>
@@ -60,7 +60,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>     
+                                    </div>
                                 </form>
                             </div>
                         </td>

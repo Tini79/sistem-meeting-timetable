@@ -33,10 +33,6 @@
                         <td>{{ $c->phone }}</td>
                     </tr>
                     @endforeach
-                    <tr>
-                        <td colspan="3" class="text-right">Jumlah Klien</td>
-                        <td>{{ $clients->count() }} orang</td>
-                    </tr>
                 </tbody>
             </table>
         </div>

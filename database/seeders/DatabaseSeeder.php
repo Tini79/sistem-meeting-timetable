@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        Staff::factory(15)->create();
+        Staff::factory(10)->create();
 
         Client::factory(15)->create();
 
@@ -42,7 +42,7 @@ class DatabaseSeeder extends Seeder
             ],
         ];
 
-        foreach($activities as $activity) {
+        foreach ($activities as $activity) {
             Activity::create($activity);
         }
 
@@ -50,9 +50,23 @@ class DatabaseSeeder extends Seeder
 
         User::create([
             'staff_id' => 1,
-            'username' => 'Tini',
+            'username' => 'Admin',
             'password' => bcrypt('admin'),
-            // 'level' => 1
+            'level'    => 'Admin'
+        ]);
+
+        User::create([
+            'staff_id' => 2,
+            'username' => 'Staff',
+            'password' => bcrypt('staff'),
+            'level'    => 'Staff',
+        ]);
+
+        User::create([
+            'staff_id' => 3,
+            'username' => 'Pimpinan',
+            'password' => bcrypt('pimpinan'),
+            'level'    => 'Pimpinan',
         ]);
     }
 }

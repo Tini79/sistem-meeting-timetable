@@ -1,13 +1,21 @@
 @extends('layouts.main')
 @section('content')
-<h1>Aktivitas <sup class="text-secondary">Tambah</sup></h1>
+<h1>Staff <sup class="text-secondary">Ubah</sup></h1>
 <div class="bg-white p-5 w-100">
-    <form action="/tools/aktivitas/dataaktivitas" method="post">
+    <form action="/tools/user/datauser/{{ $user->id }}" method="post">
         @csrf
+        @method('PATCH')
         <div class="form-group">
-            <lable for="activity" class="form-text">Aktivitas</lable>
-            <input type="text" name="activity" value="{{ old('activity') }}" class="form-control @error('activity') is-invalid @enderror">
-            @error('activity')
+            <label for="username" class="form-text">Username</label>
+            <input type="text" name="username" value="{{ old('username', $user->username) }}" class="form-control @error('username') is-invalid @enderror">
+            @error('username')
+            <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="form-group">
+            <label for="" class="form-text">Password</label>
+            <input type="password" name="password" value="" class="form-control @error('password') is-invalid @enderror">
+            @error('password')
             <div class="alert alert-danger">{{ $message }}</div>
             @enderror
         </div>
@@ -34,6 +42,6 @@
         </div>
     </form>
     <button class="btn btn-primary confirm-btn">Simpan</button>
-    <a href="/tools/aktivitas/dataaktivitas" class="btn btn-secondary">Batal</a>
+    <a href="/tools/staff/datastaff" class="btn btn-secondary">Kembali</a>
 </div>
 @endsection

@@ -4,15 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\Activity;
 use PDF;
+
 class LaporanAktivitasController extends Controller
 {
     public function index()
     {
-        $activity = Activity::latest()->get();
+        $activities = Activity::with('assignments', 'assignments.staff')->orderBy('activity')->get();
+
+        $staff = '';
 
         return view('/laporan/aktivitas/index', [
             'title' => 'Meeting Timetable | Laporan Data Aktivitas',
-            'activities' => $activity
+            'activities' => $activities,
+            'staff' => $staff
         ]);
     }
 
@@ -23,10 +27,12 @@ class LaporanAktivitasController extends Controller
      */
     public function printPdf()
     {
-        $activities = Activity::latest()->get();
-        
-        $pdf = PDF::loadView('/laporan.aktivitas.pdf', ['activities' => $activities]);
-    
+        $activities = Activity::with('assignments', 'assignments.staff')->orderBy('activity')->get();
+
+        $staff = '';
+
+        $pdf = PDF::loadView('/laporan.aktivitas.pdf', ['activities' => $activities, 'staff' => $staff]);
+
         return $pdf->stream();
     }
 }

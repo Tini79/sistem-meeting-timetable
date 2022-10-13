@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="css/app.css">
     <title>Document</title>
 </head>
+
 <body>
     <div class="bg-transparent">
         <div class="text-center">
@@ -15,7 +17,7 @@
         <table class="table" border="1">
             <thead class="bg-primary">
                 <tr>
-                <th class="text-white">#</th>
+                    <th class="text-white">#</th>
                     <th class="text-white">Staff</th>
                     <th class="text-white">Klien</th>
                     <th class="text-white">Aktivitas</th>
@@ -27,19 +29,16 @@
                 @foreach($assignments as $assignment => $a)
                 <tr>
                     <td>{{ $assignment + 1 }}.</td>
-                    <td class="text-center text-uppercase">{{ $a->staff->name }}</td>
+                    <td>{{ $a->staff->name }}</td>
                     <td>{{ $a->client->company_name }}</td>
                     <td>{{ $a->activity->activity }}</td>
                     <td>{{ showDateTime($a->start_date, 'd-m-Y') }}</td>
                     <td>{{ showDateTime($a->end_date, 'd-m-Y') }}</td>
                 </tr>
                 @endforeach
-                <tr>
-                    <td colspan="4" class="text-right">Jumlah Assignment</td>
-                    <td colspan="2">{{ $assignments->count() }}</td>
-                </tr>
             </tbody>
         </table>
     </div>
 </body>
+
 </html>

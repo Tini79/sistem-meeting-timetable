@@ -2,7 +2,7 @@
 @section('content')
 <h1>Staff <sup class="text-secondary">Tambah</sup></h1>
 <div class="bg-white p-5 w-100">
-    <form action="/staff/datastaff" method="post">
+    <form action="/tools/staff/datastaff" method="post">
         @csrf
         <div class="form-group">
             <label for="name" class="form-text">Nama</label>
@@ -23,11 +23,23 @@
         <div class="form-group">
             <label for="letter_code" class="form-text">Kode</label>
             <input type="text" name="letter_code" value="{{ old('letter_code') }}" class="form-control @error('letter_code') is-invalid @enderror">
-            <!-- <select name="letter_code" id="" class="form-control select2">
-                <option disable selected value>-- Pilih kode Staff --</option>
-                <option value=""></option>
-            </select> -->
             @error('letter_code')
+            <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="form-group">
+            <label for="username" class="form-text">Level</label>
+            <select name="level" id="" class="form-control select2">
+                <option disable selected value>-- Pilih level staff --</option>
+                @foreach(\App\Enums\LevelEnum::cases() as $level)
+                @if(old('level') == $level->value)
+                <option value="{{ $level->value }}" selected>{{ $level->value }}</option>
+                @else
+                <option value="{{ $level->value }}">{{ $level->value }}</option>
+                @endif
+                @endforeach
+            </select>
+            @error('username')
             <div class="alert alert-danger">{{ $message }}</div>
             @enderror
         </div>
@@ -55,8 +67,8 @@
                     <div class="modal-header flex-column">
                         <div class="icon-box">
                             <i class="material-icons">&#x21;</i>
-                        </div>						
-                        <h4 class="modal-title w-100">Apakah Anda yakin?</h4>	
+                        </div>
+                        <h4 class="modal-title w-100">Apakah Anda yakin?</h4>
                     </div>
                     <div class="modal-body">
                         <p>Apakah Anda ingin menyimpan data ini?</p>
@@ -67,9 +79,9 @@
                     </div>
                 </div>
             </div>
-        </div>     
+        </div>
     </form>
     <button class="btn btn-primary confirm-btn">Tambah</button>
-    <a href="/staff/datastaff" class="btn btn-secondary">Batal</a>
+    <a href="/tools/staff/datastaff" class="btn btn-secondary">Batal</a>
 </div>
 @endsection

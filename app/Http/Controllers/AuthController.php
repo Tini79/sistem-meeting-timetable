@@ -21,14 +21,15 @@ class AuthController extends Controller
             'password' => 'required|min:4|max:25'
         ]);
 
-        if(Auth::attempt($credentials)) {
+        if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             return redirect()->intended('/dashboard');
         }
-        return back();
+        return back()->with('danger', 'Gagal Login!');
     }
 
-    public function logout() {
+    public function logout()
+    {
         Auth::logout();
 
         request()->session()->invalidate();

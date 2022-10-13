@@ -5,14 +5,14 @@
         <form action="/dashboard" method="post">
             @csrf
             <div class="input-group-sm d-flex col-lg">
-                <input type="text" name="dateFilter" class="form-control" value="" required/>
+                <input type="text" name="dateFilter" class="form-control" value="" required />
                 <button type="submit" class="btn btn-primary btn-sm">Cari</button>
             </div>
         </form>
     </div>
     <div class="overflow-auto">
         <table border=1 class="table-sm table-bordered w-100" id="tableAssignment">
-                {!! $table !!}
+            {!! $table !!}
         </table>
     </div>
 </div>

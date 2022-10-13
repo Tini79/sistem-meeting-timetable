@@ -17,14 +17,4 @@ class Client extends Model
     {
         return $this->hasMany(Assignment::class);
     }
-
-    // public function scopeClient($query, array $clients)
-    // {
-    //     if(isset($clients['search']) ? $clients['search'] : false) {
-    //         return $query->where('id', 'like', '%' . $clients['search'] . '%')
-    //                     ->orWhere('company_name', 'like', '%' . $clients['search'] . '%')
-    //                     ->orWhere('addr', 'like', '%' . $clients['search'] . '%')
-    //                     ->orWhere('phone', 'like', '%' . $clients['search'] . '%');
-    //     }
-    // }
 }

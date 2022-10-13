@@ -19,12 +19,20 @@
                         <th class="col-3 text-white">Tanggal Mulai</th>
                         <th class="col-3 text-white">Tanggal Selesai</th>
                     </tr>
+                    <tr class="filters">
+                        <th class="clone"></th>
+                        <th class="clone"></th>
+                        <th class="clone"></th>
+                        <th class="clone"></th>
+                        <th class="clone"></th>
+                        <th class="clone"></th>
+                    </tr>
                 </thead>
                 <tbody>
                     @foreach($assignments as $assignment => $a)
                     <tr>
                         <td>{{ $assignment + 1 }}.</td>
-                        <td class="text-center text-uppercase">{{ $a->staff->name }}</td>
+                        <td>{{ $a->staff->name }}</td>
                         <td>{{ $a->client->company_name }}</td>
                         <td>{{ $a->activity->activity }}</td>
                         <td>{{ showDateTime($a->start_date, 'd-m-Y') }}</td>

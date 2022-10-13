@@ -48,7 +48,7 @@ class AktivitasController extends Controller
 
         Activity::create($validatedData);
 
-        return redirect('/aktivitas/dataaktivitas');
+        return redirect('/tools/aktivitas/dataaktivitas');
     }
 
     /**
@@ -62,7 +62,7 @@ class AktivitasController extends Controller
         $activity = Activity::find($id);
 
         return view('/aktivitas.show', [
-            'title' => 'Meeting Timetable | Detail Aktivitas', 
+            'title' => 'Meeting Timetable | Detail Aktivitas',
             'activity' => $activity
         ]);
     }
@@ -98,14 +98,14 @@ class AktivitasController extends Controller
             'activity' => 'required|max:80'
         ]);
 
-        if($request->activity != $activity->activity) 
-        $request->validate(['activity' => 'required']);
-        
+        if ($request->activity != $activity->activity)
+            $request->validate(['activity' => 'required']);
+
         $activity->update([
             'activity' => $request->activity
         ]);
 
-        return redirect('/aktivitas/dataaktivitas');
+        return redirect('/tools/aktivitas/dataaktivitas');
     }
 
     /**
@@ -118,6 +118,6 @@ class AktivitasController extends Controller
     {
         Activity::destroy($id);
 
-        return redirect('/aktivitas/dataaktivitas');
+        return redirect('/tools/aktivitas/dataaktivitas');
     }
 }

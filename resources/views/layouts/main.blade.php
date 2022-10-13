@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -30,21 +31,25 @@
         body {
             padding: 0;
         }
+
         #loading {
             display: none;
             position: absolute;
             top: 10px;
             right: 10px;
         }
+
         #calendar {
             max-width: 1100px;
             margin: 0 auto;
         }
+
         /* Modal's */
-        .modal-confirm {		
+        .modal-confirm {
             color: #636363;
             width: 400px;
         }
+
         .modal-confirm .modal-content {
             padding: 20px;
             border-radius: 5px;
@@ -52,33 +57,40 @@
             text-align: center;
             font-size: 14px;
         }
+
         .modal-confirm .modal-header {
-            border-bottom: none;   
+            border-bottom: none;
             position: relative;
         }
+
         .modal-confirm h4 {
             text-align: center;
             font-size: 26px;
             margin: 30px 0 -10px;
         }
+
         .modal-confirm .close {
             position: absolute;
             top: -5px;
             right: -2px;
         }
+
         .modal-confirm .modal-body {
             color: #999;
         }
+
         .modal-confirm .modal-footer {
             border: none;
-            text-align: center;		
+            text-align: center;
             border-radius: 5px;
             font-size: 13px;
             padding: 10px 15px 25px;
         }
+
         .modal-confirm .modal-footer a {
             color: #999;
-        }		
+        }
+
         .modal-confirm .icon-box {
             width: 80px;
             height: 80px;
@@ -88,13 +100,16 @@
             text-align: center;
             border: 3px solid #f15e5e;
         }
+
         .modal-confirm .icon-box i {
             color: #f15e5e;
             font-size: 46px;
             display: inline-block;
             margin-top: 13px;
         }
-        .modal-confirm .btn, .modal-confirm .btn:active {
+
+        .modal-confirm .btn,
+        .modal-confirm .btn:active {
             color: #fff;
             border-radius: 4px;
             background: #60c7c1;
@@ -107,33 +122,43 @@
             border-radius: 3px;
             margin: 0 5px;
         }
+
         .modal-confirm .btn-secondary {
             background: #c1c1c1;
         }
-        .modal-confirm .btn-secondary:hover, .modal-confirm .btn-secondary:focus {
+
+        .modal-confirm .btn-secondary:hover,
+        .modal-confirm .btn-secondary:focus {
             background: #a8a8a8;
         }
+
         .modal-confirm .btn-danger {
             background: #f15e5e;
         }
-        .modal-confirm .btn-danger:hover, .modal-confirm .btn-danger:focus {
+
+        .modal-confirm .btn-danger:hover,
+        .modal-confirm .btn-danger:focus {
             background: #ee3535;
         }
+
         .trigger-btn {
             display: inline-block;
             margin: 100px auto;
         }
     </style>
 </head>
+
 <body>
     @auth()
     <nav class="navbar custom-navbar navbar-expand-lg navbar-light bg-light fixed-top">
         <div class="container">
             <a class="navbar-brand" href="/dashboard">Meeting TimeTable</a>
-            <form action="/logout" method="post">
-                @csrf
-                <button type="submit" class="navbar-btn bg-transparent"><i class="fa-solid fa-right-from-bracket"></i>Logout</button>
-            </form>
+            <div>
+                <form action="/logout" method="post">
+                    @csrf
+                    <button type="submit" class="navbar-btn bg-transparent"><i class="fa-solid fa-right-from-bracket"></i>Logout</button>
+                </form>
+            </div>
         </div>
     </nav>
     <section class="wrapper d-flex align-items-stretch mt-5">
@@ -164,63 +189,63 @@
     <!-- Boleh juga diterapin untuk CSS jika ada cunstom css di blade tertentu, biar nanti mereka dibaca belakangan -->
     @stack('js')
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             var table = $('#example').DataTable({
                 orderCellsTop: true,
                 fixedHeader: true,
-                initComplete: function () {
+                initComplete: function() {
                     var api = this.api();
-        
-            // For each column
-            api
-                .columns([1, 2, 3, 4, 5])
-                .eq(0)
-                .each(function (colIdx) {
-                    // Set the header cell to contain the input element
-                    var cell = $('.filters th.clone').eq(
-                        $(api.column(colIdx).header()).index()
-                    );
-                    $(cell).html('<input type="text" style="width:100%;" class="form-control-sm"/>');
- 
-                    // On every keypress in this input
-                    $(
-                        'input',
-                        $('.filters th.clone').eq($(api.column(colIdx).header()).index())
-                    )
-                        .off('keyup change')
-                        .on('change', function (e) {
-                            // Get the search value
-                            $(this).attr('title', $(this).val());
-                            var regexr = '({search})'; //$(this).parents('th').find('select').val();
- 
-                            var cursorPosition = this.selectionStart;
-                            // Search the column for that value
-                            api
-                                .column(colIdx)
-                                .search(
-                                    this.value != ''
-                                        ? regexr.replace('{search}', '(((' + this.value + ')))')
-                                        : '',
-                                    this.value != '',
-                                    this.value == ''
+
+                    // For each column
+                    api
+                        .columns([1, 2, 3, 4, 5, 6, 7])
+                        .eq(0)
+                        .each(function(colIdx) {
+                            // Set the header cell to contain the input element
+                            var cell = $('.filters th.clone').eq(
+                                $(api.column(colIdx).header()).index()
+                            );
+                            $(cell).html('<input type="text" style="width:100%;" class="form-control-sm"/>');
+
+                            // On every keypress in this input
+                            $(
+                                    'input',
+                                    $('.filters th.clone').eq($(api.column(colIdx).header()).index())
                                 )
-                                .draw();
-                        })
-                        .on('keyup', function (e) {
-                            e.stopPropagation();
- 
-                            $(this).trigger('change');
-                            $(this)
-                                .focus()[0]
-                                .setSelectionRange(cursorPosition, cursorPosition);
+                                .off('keyup change')
+                                .on('change', function(e) {
+                                    // Get the search value
+                                    $(this).attr('title', $(this).val());
+                                    var regexr = '({search})'; //$(this).parents('th').find('select').val();
+
+                                    var cursorPosition = this.selectionStart;
+                                    // Search the column for that value
+                                    api
+                                        .column(colIdx)
+                                        .search(
+                                            this.value != '' ?
+                                            regexr.replace('{search}', '(((' + this.value + ')))') :
+                                            '',
+                                            this.value != '',
+                                            this.value == ''
+                                        )
+                                        .draw();
+                                })
+                                .on('keyup', function(e) {
+                                    e.stopPropagation();
+
+                                    $(this).trigger('change');
+                                    $(this)
+                                        .focus()[0]
+                                        .setSelectionRange(cursorPosition, cursorPosition);
+                                });
                         });
-                    });
                 },
             });
         });
 
         $(document).ready(function() {
-            $('.select2').select2( {
+            $('.select2').select2({
                 theme: 'bootstrap-5'
             });
         })
@@ -231,7 +256,7 @@
         }
         flatpickr(".datepicker", config);
 
-        $(document).ready(function(){
+        $(document).ready(function() {
             $('.delete-btn').on('click', function() {
                 $('#myModal').modal('show');
             })
@@ -243,10 +268,11 @@
             })
 
             // Width dashboard
-            $('#sidebarCollapse').on('click', function(){
+            $('#sidebarCollapse').on('click', function() {
                 $('.inside-content').toggleClass('action');
             });
         })
     </script>
 </body>
+
 </html>

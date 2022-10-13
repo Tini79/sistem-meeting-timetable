@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="css/app.css">
     <title>Document</title>
 </head>
+
 <body>
     <div class="bg-transparent">
         <div class="text-center">
@@ -30,12 +32,9 @@
                     <td>{{ $s->phone }}</td>
                 </tr>
                 @endforeach
-                <tr>
-                    <td colspan="3" class="text-right">Jumlah Staff</td>
-                    <td>{{ $staffs->count() }} orang</td>
-                </tr>
             </tbody>
         </table>
     </div>
 </body>
+
 </html>

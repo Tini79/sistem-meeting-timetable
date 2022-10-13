@@ -9,6 +9,7 @@ use App\Models\Assignment;
 use App\Models\Staff;
 use App\Models\Client;
 use App\Models\Activity;
+use PDF;
 
 class AssignmentController extends Controller
 {
@@ -38,23 +39,29 @@ class AssignmentController extends Controller
 
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'client_id' => 'required',
-            'activity_id' => 'required',
-            'start_date' => 'required',
-            'end_date' => 'required',
-            'note' => '',
-            'staff_id' => ['required', Rule::unique('assignments')->where(function ($q) use($request) {
-                if($request->start_date) {
-                    return $q->where('start_date', '<=', $request->start_date)->where('end_date', '>=', $request->start_date);
-                }
-            })],
-        ],
-        [
-            'staff_id.required' => 'The staff\'s name field is required.',
-            'client_id.required' => 'The client\'s name field is required.',
-            'activity_id.required' => 'The activity field is required.',
-        ]);
+        $validatedData = $request->validate(
+            [
+                'client_id' => 'required',
+                'activity_id' => ['required', Rule::unique('assignments')->where(function ($q) use ($request) {
+                    if ($request->client_id) {
+                        return $q->where('client_id', $request->client_id);
+                    }
+                })],
+                'start_date' => 'required',
+                'end_date' => 'required',
+                'note' => '',
+                'staff_id' => ['required', Rule::unique('assignments')->where(function ($q) use ($request) {
+                    if ($request->start_date) {
+                        return $q->where('start_date', '<=', $request->start_date)->where('end_date', '>=', $request->start_date);
+                    }
+                })],
+            ],
+            [
+                'staff_id.required' => 'The staff\'s name field is required.',
+                'client_id.required' => 'The client\'s name field is required.',
+                'activity_id.required' => 'The activity field is required.',
+            ]
+        );
 
         Assignment::create($validatedData);
 
@@ -69,6 +76,16 @@ class AssignmentController extends Controller
             'title' => 'Meeting Timetable | Detail Assignment',
             'assignment' => $assignment
         ]);
+    }
+
+    public function printPdf($id)
+    {
+        $assignment = Assignment::find($id);
+
+        // dd($assignment);
+        $pdf = PDF::loadView('/assignment.pdf', ['assignment' => $assignment]);
+
+        return $pdf->stream();
     }
 
     public function edit($id)
@@ -89,45 +106,57 @@ class AssignmentController extends Controller
 
     public function update(Request $req, $id)
     {
-        
-        $assignment = Assignment::find($id);
-        
-        $req->validate([
-            'staff_id' => 'required',
-            'client_id' => 'required',
-            'activity_id' => 'required',
-            'start_date' => 'required',
-            'end_date' => 'required',
-            'note' => ''
-        ],
-        [
-            'staff_id.required' => 'The staff\'s name field is required.',
-            'client_id.required' => 'The client\'s name field is required.',
-            'activity_id.required' => 'The activity field is required.',
-        ]);
 
-        if($req->staff_id != $assignment->staff_id) {
-            $req->validate(['staff_id' => ['required', Rule::unique('assignments')->where(function ($q) use($req) {
-                return $q->where('start_date', '<=', $req->start_date)->where('end_date', '>=', $req->start_date);
-            })]]);
+        $assignment = Assignment::find($id);
+
+        $req->validate(
+            [
+                'client_id' => 'required',
+                'activity_id' => 'required',
+                'start_date' => 'required',
+                'end_date' => 'required',
+                'note' => '',
+                'staff_id' => 'required',
+                'staff_id' => ['required', Rule::unique('assignments')->where(function ($q) use ($req) {
+                    if ($req->start_date) {
+                        return $q->where('start_date', '<=', $req->start_date)->where('end_date', '>=', $req->start_date);
+                    }
+                })],
+            ],
+            [
+                'staff_id.required' => 'The staff\'s name field is required.',
+                'client_id.required' => 'The client\'s name field is required.',
+                'activity_id.required' => 'The activity field is required.',
+            ]
+        );
+
+        if ($req->staff_id != $assignment->staff_id) {
+            $req->validate(['staff_id' => 'required']);
+
+            // Be careful >> sometimes it occures some bugs when do testing on it. Do clear your cache or rewrite your code,
+            // if ($req->staff_id != $assignment->staff_id) {
+            //     $req->validate(['staff_id' => ['required', Rule::unique('assignments')->where(function ($q) use ($req) {
+            //         return $q->where('start_date', '<=', $req->start_date)->where('end_date', '>=', $req->start_date);
+            //     })]]);
+            if ($req->client_id != $assignment->client_id) {
+                $req->validate(['client_id' => 'required']);
+            }
+            if ($req->activity_id != $assignment->activity_id) {
+                $req->validate(['activity_id' => ['required', Rule::unique('assignments')->where(function ($q) use ($req) {
+                    return $q->where('client_id', $req->client_id);
+                })]]);
+            }
+            if ($req->start_date != $assignment->start_date) {
+                $req->validate(['start_date' => 'required']);
+            }
+            if ($req->end_date != $assignment->end_date) {
+                $req->validate(['end_date' => 'required']);
+            }
+            if ($req->note != $assignment->note) {
+                $req->validate(['note' => '']);
+            }
         }
-        if($req->client_id != $assignment->client_id) {
-            $req->validate(['client_id' => 'required']);
-        }
-        if($req->activity_id != $assignment->activity_id) {
-            $req->validate(['activity_id' => ['required', Rule::unique('assignments')->where(function ($q) use($req) {
-                return $q->where('client_id', $req->client_id);
-            })]]);
-        }
-        if($req->start_date != $assignment->start_date) {
-            $req->validate(['start_date' => 'required']);
-        }
-        if($req->end_date != $assignment->end_date) {
-            $req->validate(['end_date' => 'required']);
-        }
-        if($req->note != $assignment->note) {
-            $req->validate(['note' => '']);
-        }
+
         $assignment->update([
             'staff_id' => $req->staff_id,
             'client_id' => $req->client_id,

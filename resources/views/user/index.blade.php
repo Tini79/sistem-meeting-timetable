@@ -1,11 +1,11 @@
 @extends('layouts.main')
 @section('content')
 <div class="">
-    <h1>Aktivitas <sup class="text-secondary">Daftar</sup></h1>
+    <h1>Staff <sup class="text-secondary">Daftar</sup></h1>
 </div>
 <div class="w-100">
     <div class="row justify-content-end mr-1">
-        <a href="/tools/aktivitas/dataaktivitas/create" class="btn btn-outline-primary">Tambah</a>
+        <a href="/tools/staff/datastaff/create" class="btn btn-outline-primary">Tambah</a>
     </div>
     <div class="mt-3 bg-white p-5">
         <div class="overflow-auto">
@@ -13,26 +13,28 @@
                 <thead class="bg-primary">
                     <tr>
                         <th class="col-1 text-white">#</th>
-                        <th class="col-6 text-white">Aktivitas</th>
+                        <th class="col-1 text-white">Username</th>
+                        <th class="col-1 text-white">Level</th>
                         <th class="col-2 text-white">Aksi</th>
                     </tr>
                     <tr class="filters">
+                        <th class="clone"></th>
                         <th class="clone"></th>
                         <th class="clone"></th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($activities as $activity => $a)
+                    @foreach($users as $user => $u)
                     <tr>
-                        <td>{{ $activity + 1 }}.</td>
-                        <td>{{ $a->activity }}</td>
-                        <td>
+                        <td>{{ $user + 1 }}.</td>
+                        <td class="col-5">{{ $u->username }}</td>
+                        <td class="col-5">{{ $u->level }}</td>
+                        <td class="col-2">
                             <div class="btn-group">
-                                <!-- <a href="/tools/aktivitas/dataaktivitas/{{ $a->id }}" class="btn btn-sm"><i class="fa-regular fa-eye text-muted"></i></a> -->
-                                <a href="/tools/aktivitas/dataaktivitas/{{ $a->id }}/edit" class="btn btn-sm"><i class="fa-regular fa-pen-to-square text-info"></i></a>
+                                <a href="/tools/user/datauser/{{ $u->id }}/edit" class="btn btn-sm"><i class="fa-regular fa-pen-to-square text-info"></i></a>
                                 <button class="btn btn-sm delete-btn"><i class="fa-solid fa-trash text-danger"></i></button>
-                                <form action="/tools/aktivitas/dataaktivitas/{{ $a->id }}" method="post">
+                                <form action="/tools/user/datauser/{{ $u->id }}" method="post">
                                     @csrf
                                     @method('DELETE')
                                     <!-- Modal HTML -->

@@ -20,7 +20,7 @@ class StaffFactory extends Factory
         return [
             'name' => $this->faker->name(),
             'letter_code' => $this->faker->unique()->randomLetter(),
-            'phone' => $this->faker->e164PhoneNumber()
+            'phone' => $this->faker->e164PhoneNumber(),
         ];
     }
 }

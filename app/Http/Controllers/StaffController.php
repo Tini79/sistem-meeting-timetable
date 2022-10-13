@@ -21,7 +21,7 @@ class StaffController extends Controller
         return view('/staff.index', [
             'title' => 'Meeting Timetable | Staff',
             'staffs' => $staff
-        ]); 
+        ]);
     }
 
     /**
@@ -33,10 +33,10 @@ class StaffController extends Controller
     {
         $staffs = Staff::all();
 
-        foreach(range('a', 'z') as $letter) {
+        foreach (range('a', 'z') as $letter) {
             $staff_codes[] = $letter;
         }
-            
+
         return view('/staff.create', [
             'title' => 'Meeting Timetable | Tambah Staff',
             'staffs' => $staffs,
@@ -54,31 +54,33 @@ class StaffController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required|min:5|max:100',
-            'letter_code' => ['required', 'max:1', Rule::unique('staffs')->where(function($q) use($request) {
+            'letter_code' => ['required', 'max:1', Rule::unique('staffs')->where(function ($q) use ($request) {
                 return $q->where('letter_code', $request->letter_code);
             })],
             'phone' => 'required|max:13',
             'username' => 'required',
             'password' => 'required|min:5',
-            'staff_id' => ''
+            'staff_id' => '',
+            'level' => 'required'
         ]);
 
-        
+
         $validatedData['password'] = bcrypt($validatedData['password']);
 
         $staff = Staff::create($validatedData);
         $staffIds = $staff->latest()->get('id')->take(1);
 
-        foreach($staffIds as $staffId){
-                $id = $staffId->id;
-                User::insert([
-                    'username' => $validatedData['username'],
-                    'password' => $validatedData['password'],
-                    'staff_id' => $id
-                ]);
-            }
+        foreach ($staffIds as $staffId) {
+            $id = $staffId->id;
+            User::insert([
+                'username' => $validatedData['username'],
+                'password' => $validatedData['password'],
+                'level'    => $validatedData['level'],
+                'staff_id' => $id
+            ]);
+        }
 
-        return redirect('/staff/datastaff');
+        return redirect('/tools/staff/datastaff');
     }
 
     /**
@@ -128,32 +130,25 @@ class StaffController extends Controller
             'name' => 'required|min:5|max:100',
             'letter_code' => 'required|max:1',
             'phone' => 'required|max:13',
-            'username' => 'required',
         ]);
-        
 
-        if($req->name != $staff->name)
-        $req->validate(['name' => 'required']);
-        if($req->letter_code != $staff->letter_code)
-        $req->validate(['letter_code' => ['required', Rule::unique('staffs')->where(function($q) use($req) {
-            return $q->where('letter_code', $req->letter_code);
-        })]]);
-        if($req->phone != $staff->phone)
-        $req->validate(['phone' => 'required']);
-        if($req->username != $staff->user->username)
-        $req->validate(['username' => 'required']);
+
+        if ($req->name != $staff->name)
+            $req->validate(['name' => 'required']);
+        if ($req->letter_code != $staff->letter_code)
+            $req->validate(['letter_code' => ['required', Rule::unique('staffs')->where(function ($q) use ($req) {
+                return $q->where('letter_code', $req->letter_code);
+            })]]);
+        if ($req->phone != $staff->phone)
+            $req->validate(['phone' => 'required']);
 
         $staff->update([
             'name' => $req->name,
             'letter_code' => $req->letter_code,
             'phone' => $req->phone,
         ]);
-        
-        $staff->user->update([
-            'username' => $req->username,
-        ]);
 
-        return redirect('/staff/datastaff');
+        return redirect('/tools/staff/datastaff');
     }
 
     /**
@@ -166,6 +161,6 @@ class StaffController extends Controller
     {
         Staff::destroy($id);
 
-        return redirect('/staff/datastaff');
+        return redirect('/tools/staff/datastaff');
     }
 }
